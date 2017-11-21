@@ -15,9 +15,19 @@ ul li{
   margin-top: 0px;
 }
 
-.insta{
+.title-slide h1 {
+   font-family: 'HKGroteskRegular';
+   float: left;
+   text-align: left;
+   z-index: 2;
+   border-left: 13px solid #FFCD33;
+   padding-left: 0.75em;
+   margin-left: 1em;
+}
+
+.github{
    position: absolute;
-   top:23em;
+   top:24em;
    left: 12.8em;
    text-align: center;
    font-family: 'HKGroteskBold';
@@ -25,7 +35,7 @@ ul li{
 
 .twitter{
    position: absolute;
-   top:23em;
+   top:24em;
    left: 41em;
    text-align: center;
    font-family: 'HKGroteskBold';
@@ -33,7 +43,7 @@ ul li{
 
 .email{
    position: absolute;
-   top:23em;
+   top:24em;
    left:23em;
    text-align: center;
    font-family: 'HKGroteskBold';
@@ -49,13 +59,8 @@ ul li{
    text-align: center;
 }
 
-.contactB{
-   margin-top: 16em;
-   text-align: center;
-}
-
 .contactImages img{
-   top:12em;
+   top:13em;
    left: 10.4em;
    position: absolute;
    height: 10em;
@@ -80,18 +85,29 @@ ul li{
    left: 12em;
 }
 
-.quote {
+.quote-slide h1{
+   font-family: 'HKGroteskRegular';
+   font-weight: normal;
+   display: block;
+   margin-left: 1.85em;
+   z-index: 2;
+   border-left: 13px solid #FFCD33;
+   padding-left: 0.75em;
+}
+
+.quote-slide h3 {
   background: #f9f9f9;
   border-left: 15px solid #FFCD33;
   width: 80%;
-  margin: 1.5em 5.1em;
+  font-size: 12pt;
+  margin: 1.5em 6.3em;
   display: block;
   line-height: 2.5em;
   padding: 0.5em 10px;
   quotes: "\201C""\201D""\2018""\2019";
 }
 
-.quote:before {
+.quote-slide h3:before {
   color: #ccc;
   content: open-quote;
   font-size: 4em;
@@ -100,11 +116,11 @@ ul li{
   vertical-align: -0.4em;
 }
 
-.quote p {
+.quote-slide p {
   display: inline;
 }
 
-.quote {
+.quote-slide h3 {
   padding:1em;
   font-style: italic;
   color: #222;
@@ -114,14 +130,13 @@ ul li{
 /* START OF IMAGES */
 
 
-.logo img {
-   position: absolute;
+.title-slide img {
    width: 6em;
-   top: 13em;
-   left: 14.5em;
    height: 6em;
-   z-index: 2;
-}
+   float: left;
+   margin-top: 2em;
+   margin-left: 6.0em;
+ }
 
 
 .yellowCircleLeft img {
@@ -190,7 +205,18 @@ body {
    z-index: 2;
 }
 
-h1 {
+
+.section-slide h1 {
+   font-family: 'HKGroteskRegular';
+   font-weight: normal;
+   display: block;
+   margin-left: 1.85em;
+   z-index: 2;
+   border-left: 13px solid #FFCD33;
+   padding-left: 0.75em;
+}
+
+.content h1 {
    font-family: 'HKGroteskRegular';
    font-weight: normal;
    display: block;
@@ -272,6 +298,52 @@ b {
   overflow: hidden;
 }
 
+.image-slide img {
+  left: 20%;
+  top: 25%;
+  position: absolute;
+  width: 60%;
+}
+
+.image-slide h1 {
+   position: relative;
+   font-family: 'HKGroteskRegular';
+   font-weight: normal;
+   font-size: 35pt;
+   padding-bottom: 20px;
+}
+
+
+.image-slide h1:after {
+  content: "";
+  position: absolute;
+  top:10px;
+  left: 50%;
+  margin-left: -250px;
+  bottom: 0;
+  width: 500px;
+  border-bottom: 13px solid #FFCD33;
+}
+
+.contact-slide h1 {
+   position: relative;
+   font-family: 'HKGroteskRegular';
+   font-weight: normal;
+   padding-bottom: 20px;
+}
+
+
+.contact-slide h1:after {
+  content: "";
+  position: absolute;
+  top:10px;
+  left: 50%;
+  margin-left: -200px;
+  bottom: 0;
+  width: 400px;
+  border-bottom: 13px solid #FFCD33;
+}
+
 .code pre {
   margin: 0; 
 }
@@ -298,9 +370,6 @@ b {
 
 .sixty img {
   width: 60%;
-}
-.seventy img {
-  width: 70%;
 }
 
 .eighty img {
