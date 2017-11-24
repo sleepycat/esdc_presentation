@@ -2,7 +2,6 @@
     font-family: 'hk_groteskbold';
     src: url('../fonts/hkgrotesk-bold-webfont.woff2') format('woff2'),
          url('../fonts/hkgrotesk-bold-webfont.woff') format('woff');
-    font-weight: bold;
 
 }
 
@@ -314,10 +313,7 @@ b {
 }
 
 .image-slide img {
-  left: 20%;
-  top: 25%;
-  position: absolute;
-  width: 60%;
+  width: 80%;
 }
 
 .center h1 {
