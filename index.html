@@ -11,99 +11,399 @@
 
 class: middle, title-slide
 
-# <b>CDS Team meeting, Nov 27th</b> Introducing Remark.js
+# API thinking
+
+---
+class:left, middle
+
+# Level 1
+
+---
+class:left, middle
+
+# The basics: HTTP
+
+---
+class: center, middle
+
+.sixty[![TBL](images/berners-lee.jpg)]
+
+---
+class: left, code
+
+```sh
+# asking for a document
+curl localhost:5000/example.html
+
+# the request
+GET /example.html HTTP/1.1
+Host: localhost:5000
+User-Agent: curl/7.57.0
+Accept: */*
+```
+---
+class: left, code
+
+```html
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;Example HTML document&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h3&gt;An example header&lt;/h3&gt;
+    &lt;p&gt;
+    A paragraph
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
+---
+
+class:left, middle
+
+# The basics: Servers
+
+---
+
+class: left, code
+# Servers: mapping code to URLs
+
+```javascript
+const express = require('express')
+
+let server = express()
+
+server.get('/somepath', (request, response) => {
+  // do useful work
+  // and then...
+  // send a response back:
+  response.send('waaaassup!')
+})
+```
+---
+class:left, middle
+
+# Level 2
 
 ---
 
 class:left, middle
 
-# <b>This is an example of a text slide. Try to keep it short and remember to use simple language.</b>
+# Including data in your documents
 
 ---
+class: left, code
 
-class: center, image-slide
+# Variables in a document
 
-# <b> This is ex. of an image-slide</b>
+```html
+[mike@longshot api]$ cat views/main.handlebars 
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;Example App&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h3&gt;The date&lt;/h3&gt;
+    &lt;p&gt;
+      {{{date}}}
+    &lt;/p&gt;
+    &lt;h3&gt;The time&lt;/h3&gt;
+    &lt;p&gt;
+      {{{time}}}
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
+---
+class: left, code
+# Our server
 
-![Image example 1](images/projects1.png)
+```javascript
+const express = require('express')
+const exphbs = require('express-handlebars')
 
+let server = express()
+server.engine('handlebars', exphbs());
+server.set('view engine', 'handlebars');
+
+server.get('/now', (request, response) => {
+  let now = new Date()
+  let time = now.toLocaleTimeString('en-CA', { timeZone: 'America/Toronto' })
+  let date = now.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' })
+  response.render('main', {date, time});
+})
+
+server.listen(3000)
+```
+---
+class: left, code
+
+```html
+[mike@longshot api]$ cat views/main.handlebars 
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;Example App&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h3&gt;The date&lt;/h3&gt;
+    &lt;p&gt;
+      {{{date}}}
+    &lt;/p&gt;
+    &lt;h3&gt;The time&lt;/h3&gt;
+    &lt;p&gt;
+      {{{time}}}
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
 ---
 
-class: center, image-slide
+class: left, code
 
-# <b> This is ex. of an image-slide</b>
+```html
+[mike@longshot ~]$ curl localhost:3000/now
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;Example App&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h3&gt;The date&lt;/h3&gt;
+    &lt;p&gt;
+      12/12/2017
+    &lt;/p&gt;
+    &lt;h3&gt;The time&lt;/h3&gt;
+    &lt;p&gt;
+      4:23:06 PM
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
 
-![Image example 2](images/projects2.png)
-
+```
 ---
 
-class: center, image-slide
+# Pros:
+* Documents include data. Possibly recent! *very exciting*
 
-# <b> This is ex. of an image-slide</b>
-
-![Image example 3](images/projects3.png)
-
----
-
-class: left, middle, quote-slide
-
-# <b>This is an example of a quote slide</b>
-
-### The Government of Canada has an opportunity—and a responsibility—to deliver world-class services to Canadians. <b>This will require disruption as we make the switch, both technically and culturally, to agile digital delivery models. To accelerate these efforts, I am excited to announce the launch of the Canadian Digital Service (CDS)</b> to modernize the way the Government of Canada designs and delivers digital services. CDS will be a partner to departments in delivering measurably improved services. <b>We are rethinking the service design and delivery process</b> from the user’s perspective, and engaging users every step of the way. -- the Honourable Scott Brison
-
-
----
-
-class:left, middle, section-slide
-
-# <b> This is an ex. of a section header </b> <br> ...and subheader
+# Cons:
+* Data is mixed with presentation
+* Separating data from presentation requires squishy humans
+* Changing presentation breaks my code
 
 ---
 
 class:left, middle
 
-# <b> This is an examle of an <br> ordered list</b>
+# ReST API
 
-* <b> 1) List item 1: </b> stuff 
-* <b> 2) List item 2: </b> more stuff
-* <b> 3) List item 3: </b> even more stuff
+---
+
+class:left, code
+
+```javascript
+const express = require('express')
+
+let server = express()
+
+server.get('/now', (request, response) => {
+  let now = new Date()
+  let time = now.toLocaleTimeString('en-CA', { timeZone: 'America/Toronto' })
+  let date = now.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' })
+  response.json({ date, time })
+})
+
+server.listen(3000)
+
+```
+
+---
+
+class:left, middle, code
+
+# A request
+
+```bash
+[mike@longshot ~]$ curl localhost:3000/now
+{
+  "date":"12/12/2017",
+  "time":"5:38:10 PM"
+}
+```
+
+---
+
+class:left, middle, smaller-text
+
+# Pros:
+* Real data on request!
+
+# Cons:
+* Hardcoded response (overfetching)
+* Changing response breaks my code: Now you need versions!
+* Getting related data/fields == more requests
+* Adhoc validation: route matching, controller logic, model validations, db data types
+
+---
+
+class: center, middle
+
+.ninety[![sparse](images/json_api_sparse_fieldsets.png)]
+
+---
+class:left, middle, smaller-text
+
+# Pros:
+* Real data on request!
+* No overfetching
+* Related data/fields in one request
+* Probably don't need versions anymore
+* Visibility into what fields/types people want/use
+
+# Cons:
+* You've created a query language! How are you going to parse and validate incoming queries?
+* Worse adhoc validation: route matching, controller logic, model validations, db data types, resource types and fields
+* Have fun documentating this.
 
 ---
 
 class:left, middle
 
-.yellowCircleLeft[![Yellow Circle](images/circle.png)]
+# GraphQL
 
-.iconLeft[![Left Icon](images/leftIcon.svg)]
+---
+class:left, code
 
-# <b>This is an example of a slide <br> with a supporting icon. Try <br> to keep it to 3 lines.</b>
+# Create a type
 
+```javascript
+const { GraphQLObjectType, GraphQLString } = require('graphql')
+
+// Define a type that describes the data
+const DateTime = new GraphQLObjectType({
+  name: 'DateTime',
+  description: 'An example date/time object',
+  fields: () => ({
+    date: {
+      description: 'the current date in DD/MM/YYYY format',
+      type: GraphQLString,
+    },
+    time: {
+      description: 'the current time in HH:MM:SS AM/PM format',
+      type: GraphQLString,
+    },
+  }),
+})
+
+module.exports.DateTime = DateTime
+```
 
 ---
 
-class: left, middle
+class:left, code, smaller-text
 
-# <b> H1 Header + H3 supporting text </b> <br> 
+```javascript
+const express = require('express')
+const graphqlHTTP = require('express-graphql')
+const { GraphQLSchema, GraphQLObjectType, GraphQLString } = require('graphql')
+const { DateTime } = require('./DateTimeType')
 
-### This is an example of a text only slide. Although some people might require more space, it is encouraged to keep it brief and use the 3 line slide template. Keep the text bold  with the < b > tag, line break when necessary < br > and try to stay between 5 or 6 lines.
+
+const query = new GraphQLObjectType({
+  name: 'Query',
+  fields: {
+    now: {
+      description: 'Returns current time and date values',
+      type: DateTime, // what the resolve function will produce
+      resolve: () => {
+        let now = new Date()
+        let time = now.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' })
+        let date = now.toLocaleTimeString('en-CA', { timeZone: 'America/Toronto' })
+        return { date, time }
+      },
+    },
+  },
+})
+
+let server = express()
+
+server.use(
+  '/graphql',
+  graphqlHTTP({ schema: new GraphQLSchema({ query }), graphiql: true }),
+)
+
+server.listen(3000)
+```
 
 ---
 
-class:left, middle, section-slide
+class:left, code
 
-# <b> Coding Example: </b> <br> Title for Coding section 
+# Requesting data
+
+```bash
+[mike@longshot ~]$ curl -H "Content-Type: application/graphql" -d '{ now { date } }'  "localhost:3000/graphql"
+{
+  "data":{
+    "now":{
+      "date":"6:33:24 PM"
+    }
+  }
+}
+[mike@longshot ~]$ curl -H "Content-Type: application/graphql" -d '{ now { time } }'  "localhost:3000/graphql"
+{
+  "data":{
+    "now":{
+      "time":"12/12/2017"
+    }
+  }
+}
+[mike@longshot ~]$ curl -H "Content-Type: application/graphql" -d '{ now { date time } }'  "localhost:3000/graphql"
+{
+  "data":{
+    "now":{
+      "date":"6:33:38 PM",
+      "time":"12/12/2017"
+    }
+  }
+}
+```
+
+---
+
+class: center, middle, smaller-text
+# Pros:
+* Real data on request
+* No overfetching
+* Related data/fields in one request
+* Probably don't need versions anymore
+* Formal language as input: parsing an 
+* Visibility into what fields/types people want/use
+* Documentation can be generated from annotations on types/fields
+* Powerful, auditable security boundary*
+
+# Cons:
+* N+1 queries by default
+* Running at Facebook since 2012, public release in 2015. Proven, but not well known or understood.
+* Recursive queries: GraphQL can handle this, can your backend infrastructure?
 
 ---
 
 class: center
 
-# <b> Any Questions?</b>
+# Any Questions?
 
 .contactImages[![Contact Images](images/contact.png)]
 
-.github[@nmakuch]
-.twitter[@makuch_nick] 
-.email[nick.makuch@tbs-sct.gc.ca]
+.github[@sleepycat]
+.twitter[@dexterchief] 
+.email[mike.williamson@tbs-sct.gc.ca]
 
     </textarea>
     <script src="js/remark-latest.min.js"></script>
