@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title> CDS - Presentation Title </title>
+    <title>NRCAN API</title>
     <meta charset="utf-8">
     <link rel= "stylesheet" href= "css/stylesheet.css" />
    
@@ -11,387 +11,102 @@
 
 class: middle, title-slide
 
-# API thinking
+# NRCAN API
+## What we've learned so far
 
 ---
 class:left, middle
 
-# Level 1
+# The Users
 
 ---
 class:left, middle
 
-# The basics: HTTP
+# What users want
+
+* location
+* location
+* location
 
 ---
-class: center, middle
+class:left, middle
 
-.sixty[![TBL](images/berners-lee.jpg)]
+# The Data
+
+* Versioned: fields are added over time
+* Temporal: current state of a house == sum of all evaluations.
+* Georeferenced: location is a core concept in this data with no concise representation (ie: no lat/lng).
 
 ---
-class: left, code
 
-```sh
-# asking for a document
-curl localhost:5000/example.html
+# Data quality
 
-# the request
-GET /example.html HTTP/1.1
-Host: localhost:5000
-User-Agent: curl/7.57.0
-Accept: */*
-```
+![TBL](images/broken_accents.png)
+
 ---
-class: left, code
+# Data quality
 
-```html
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
-    &lt;title&gt;Example HTML document&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h3&gt;An example header&lt;/h3&gt;
-    &lt;p&gt;
-    A paragraph
-    &lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-```
+.eighty[![TBL](images/house_region_clusters.png)]
+
+---
+# Data quality
+
+.eighty[![TBL](images/client_city_clusters.png)]
+
+---
+# Data quality
+
+.eighty[![TBL](images/client_address_clusters.png)]
+
+---
+# Data quality
+
+.eighty[![TBL](images/postal_code_clusters.png)]
+
+---
+class:left, middle
+
+# Data Storage
 ---
 
 class:left, middle
 
-# The basics: Servers
+## Normalized vs queryable
+
+.ninety[![TBL](images/versioned_data.png)]
+
+---
+class:left, top
+
+## Geospatial support
+
+.ninety[![TBL](images/geospatial_columns.png)]
 
 ---
 
-class: left, code
-# Servers: mapping code to URLs
+class: left, middle
 
-```javascript
-const express = require('express')
+## Libraries have expectations
 
-let server = express()
+.ninety[![TBL](images/join_monster.png)]
 
-server.get('/somepath', (request, response) => {
-  // do useful work
-  // and then...
-  // send a response back:
-  response.send('waaaassup!')
-})
-```
----
-class:left, middle
-
-# Level 2
+???
+Mapping between tables and types
+Open source libraries prefer open source tools
 
 ---
+class: left, middle
 
-class:left, middle
+## Other Sources
 
-# Including data in your documents
-
----
-class: left, code
-
-# Variables in a document
-
-```html
-[mike@longshot api]$ cat views/main.handlebars 
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
-    &lt;title&gt;Example App&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h3&gt;The date&lt;/h3&gt;
-    &lt;p&gt;
-      {{{date}}}
-    &lt;/p&gt;
-    &lt;h3&gt;The time&lt;/h3&gt;
-    &lt;p&gt;
-      {{{time}}}
-    &lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-```
----
-class: left, code
-# Our server
-
-```javascript
-const express = require('express')
-const exphbs = require('express-handlebars')
-
-let server = express()
-server.engine('handlebars', exphbs());
-server.set('view engine', 'handlebars');
-
-server.get('/now', (request, response) => {
-  let now = new Date()
-  let time = now.toLocaleTimeString('en-CA', { timeZone: 'America/Toronto' })
-  let date = now.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' })
-  response.render('main', {date, time});
-})
-
-server.listen(3000)
-```
----
-class: left, code
-
-```html
-[mike@longshot api]$ cat views/main.handlebars 
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
-    &lt;title&gt;Example App&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h3&gt;The date&lt;/h3&gt;
-    &lt;p&gt;
-      {{{date}}}
-    &lt;/p&gt;
-    &lt;h3&gt;The time&lt;/h3&gt;
-    &lt;p&gt;
-      {{{time}}}
-    &lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-```
----
-
-class: left, code
-
-```html
-[mike@longshot ~]$ curl localhost:3000/now
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
-    &lt;title&gt;Example App&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h3&gt;The date&lt;/h3&gt;
-    &lt;p&gt;
-      12/12/2017
-    &lt;/p&gt;
-    &lt;h3&gt;The time&lt;/h3&gt;
-    &lt;p&gt;
-      4:23:06 PM
-    &lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-
-```
----
-
-# Pros:
-* Documents include data. Possibly recent! *very exciting*
-
-# Cons:
-* Data is mixed with presentation
-* Separating data from presentation requires squishy humans
-* Changing presentation breaks my code
+.ninety[![TBL](images/hydro_ottawa.png)]
 
 ---
+class: left, middle
 
-class:left, middle
+## Other Sources
 
-# ReST API
-
----
-
-class:left, code
-
-```javascript
-const express = require('express')
-
-let server = express()
-
-server.get('/now', (request, response) => {
-  let now = new Date()
-  let time = now.toLocaleTimeString('en-CA', { timeZone: 'America/Toronto' })
-  let date = now.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' })
-  response.json({ date, time })
-})
-
-server.listen(3000)
-
-```
-
----
-
-class:left, middle, code
-
-# A request
-
-```bash
-[mike@longshot ~]$ curl localhost:3000/now
-{
-  "date":"12/12/2017",
-  "time":"5:38:10 PM"
-}
-```
-
----
-
-class:left, middle, smaller-text
-
-# Pros:
-* Real data on request!
-
-# Cons:
-* Hardcoded response (overfetching)
-* Changing response breaks my code: Now you need versions!
-* Getting related data/fields == more requests
-* Adhoc validation: route matching, controller logic, model validations, db data types
-
----
-
-class: center, middle
-
-.ninety[![sparse](images/json_api_sparse_fieldsets.png)]
-
----
-class:left, middle, smaller-text
-
-# Pros:
-* Real data on request!
-* No overfetching
-* Related data/fields in one request
-* Probably don't need versions anymore
-* Visibility into what fields/types people want/use
-
-# Cons:
-* You've created a query language! How are you going to parse and validate incoming queries?
-* Worse adhoc validation: route matching, controller logic, model validations, db data types, resource types and fields
-* Have fun documentating this.
-
----
-
-class:left, middle
-
-# GraphQL
-
----
-class:left, code
-
-# Create a type
-
-```javascript
-const { GraphQLObjectType, GraphQLString } = require('graphql')
-
-// Define a type that describes the data
-const DateTime = new GraphQLObjectType({
-  name: 'DateTime',
-  description: 'An example date/time object',
-  fields: () => ({
-    date: {
-      description: 'the current date in DD/MM/YYYY format',
-      type: GraphQLString,
-    },
-    time: {
-      description: 'the current time in HH:MM:SS AM/PM format',
-      type: GraphQLString,
-    },
-  }),
-})
-
-module.exports.DateTime = DateTime
-```
-
----
-
-class:left, code, smaller-text
-
-```javascript
-const express = require('express')
-const graphqlHTTP = require('express-graphql')
-const { GraphQLSchema, GraphQLObjectType, GraphQLString } = require('graphql')
-const { DateTime } = require('./DateTimeType')
-
-
-const query = new GraphQLObjectType({
-  name: 'Query',
-  fields: {
-    now: {
-      description: 'Returns current time and date values',
-      type: DateTime, // what the resolve function will produce
-      resolve: () => {
-        let now = new Date()
-        let time = now.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' })
-        let date = now.toLocaleTimeString('en-CA', { timeZone: 'America/Toronto' })
-        return { date, time }
-      },
-    },
-  },
-})
-
-let server = express()
-
-server.use(
-  '/graphql',
-  graphqlHTTP({ schema: new GraphQLSchema({ query }), graphiql: true }),
-)
-
-server.listen(3000)
-```
-
----
-
-class:left, code
-
-# Requesting data
-
-```bash
-[mike@longshot ~]$ curl -H "Content-Type: application/graphql" -d '{ now { date } }'  "localhost:3000/graphql"
-{
-  "data":{
-    "now":{
-      "date":"6:33:24 PM"
-    }
-  }
-}
-[mike@longshot ~]$ curl -H "Content-Type: application/graphql" -d '{ now { time } }'  "localhost:3000/graphql"
-{
-  "data":{
-    "now":{
-      "time":"12/12/2017"
-    }
-  }
-}
-[mike@longshot ~]$ curl -H "Content-Type: application/graphql" -d '{ now { date time } }'  "localhost:3000/graphql"
-{
-  "data":{
-    "now":{
-      "date":"6:33:38 PM",
-      "time":"12/12/2017"
-    }
-  }
-}
-```
-
----
-
-class: center, middle, smaller-text
-# Pros:
-* Real data on request
-* No overfetching
-* Related data/fields in one request
-* Probably don't need versions anymore
-* Formal language as input: parsing an 
-* Visibility into what fields/types people want/use
-* Documentation can be generated from annotations on types/fields
-* Powerful, auditable security boundary*
-
-# Cons:
-* N+1 queries by default
-* Running at Facebook since 2012, public release in 2015. Proven, but not well known or understood.
-* Recursive queries: GraphQL can handle this, can your backend infrastructure?
+.ninety[![TBL](images/open_data_ottawa.png)]
 
 ---
 
