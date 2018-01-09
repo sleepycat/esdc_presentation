@@ -14,6 +14,20 @@ ul {
   list-style-type: none;
 }
 
+ul ul li {
+  list-style-type: none;
+  border-left: none;
+}
+
+.smaller-text ul li {
+  display: block;
+  border-left: 15px solid #ffcd33;
+  padding-left: 1.25em;
+  margin-left: 3.1em;
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
 ul li {
   display: block;
   font-size: 35px;
@@ -26,7 +40,7 @@ ul li {
 
 .title-slide h1 {
   font-family: 'hk_groteskregular';
-  transform: translate(7%,49%);
+  transform: translate(7%, 49%);
   font-weight: bold;
   text-align: left;
   border-left: none;
@@ -34,7 +48,7 @@ ul li {
 
 .title-slide h2 {
   font-size: 35px;
-  transform: translate(8%,-14%);
+  transform: translate(8%, -14%);
   font-family: 'hk_groteskregular';
   border-left: none;
 }

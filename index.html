@@ -17,24 +17,35 @@ class: middle, title-slide
 ---
 class:left, middle
 
-# The Users
+# What users want
 
 ---
 class:left, middle
 
-# What users want
+## Address level data
 
-* location
-* location
-* location
+.ninety[![TBL](images/open_data_ottawa.png)]
+
+---
+class:left, middle
+
+# Data for "neighbourhoods"
+  
+.sixty[![TBL](images/geojson.png)]
 
 ---
 class:left, middle
 
 # The Data
 
-* Versioned: fields are added over time
-* Temporal: current state of a house == sum of all evaluations.
+---
+class:left, middle
+
+# The Data
+
+* Variable: new columns/fields are added over time
+* Semi-structured: many fields are optional/don't have values
+* Temporal: sum of all evaluations is the current state of a house
 * Georeferenced: location is a core concept in this data with no concise representation (ie: no lat/lng).
 
 ---
@@ -84,29 +95,77 @@ class:left, top
 
 ---
 
-class: left, middle
+class: left, top
 
-## Libraries have expectations
+## SQL Helper libraries need a different table structure
 
-.ninety[![TBL](images/join_monster.png)]
+.fourty[![TBL](images/join_monster.png)]
+```javascript
+{                             SELECT                               {
+  user(id: 1) {               "user"."id",                         user: {
+    idEncoded                 "user"."first_name",                   idEncoded: 'MQ==',
+    fullName        ==>       "user"."last_name",        ==>         fullName: 'andrew carlson',
+    email                     "user"."email_address"                 email: 'andrew@stem.is'
+  }                           FROM "accounts" AS "user"              }
+}                             WHERE "user"."id" = 1                }
+```
 
 ???
 Mapping between tables and types
 Open source libraries prefer open source tools
 
 ---
-class: left, middle
+class: left, middle, smaller-text
 
-## Other Sources
+# Optimizing for the API:
 
-.ninety[![TBL](images/hydro_ottawa.png)]
+* Queryability: run queries against a single pool of data
+* Efficient Storage: No need to store null values
+* Development speed:
+  * Open Source == no procurement process/licence management
+  * Easy install
+  * Schemaless == effortless setup
+  * Ubiquitous: supports test driven development
+* Change: "When faced with two or more alternatives that deliver roughly the same value,</br>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;take the path that makes future change easier." -- Dave Thomas
+* change: We can modify things as needed, ie: adding geospatial fields
 
 ---
+
 class: left, middle
 
-## Other Sources
+# A proposal: API backed by MongoDB
 
-.ninety[![TBL](images/open_data_ottawa.png)]
+---
+
+class: left, middle, smaller-text
+
+# Why MongoDB?
+
+* Document store: perfect for semi-structured data
+* Performant
+* Dev speed++
+* Scalable
+* OSS
+* Excellent geopatial support
+* Cross platform: Windows, Mac, Linux
+* Multiple options: fully hosted (many providers) or DIY
+* Azure's CosmosDB fully supports MongoDB features/syntax.
+
+---
+
+# Loose ends
+
+## Updating:
+  * Should the mailer bot insert into the API?
+  * Should there be some "post insert" job?
+
+---
+
+# Loose ends
+
+## Privacy: 
+
+.ninety[![mapping](images/field_mapping.png)]
 
 ---
 
