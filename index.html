@@ -4,117 +4,830 @@
     <title>NRCAN API</title>
     <meta charset="utf-8">
     <link rel= "stylesheet" href= "css/stylesheet.css" />
-   
   </head>
   <body>
     <textarea id="source">
 
 class: middle, title-slide
 
-# NRCAN API
-## What we've learned so far
+# How we're building
+## &amp; why we're excited about React & GraphQL
 
 ---
-class:left, middle
+class: left, middle
 
-# What users want
-
----
-class:left, middle
-
-## Address level data
-
-.ninety[![TBL](images/open_data_ottawa.png)]
-
----
-class:left, middle
-
-# Data for "neighbourhoods"
-  
-.sixty[![TBL](images/geojson.png)]
-
----
-class:left, middle
-
-# The Data
-
----
-class:left, middle
-
-# The Data
-
-* Variable: new columns/fields are added over time
-* Semi-structured: many fields are optional/don't have values
-* Temporal: sum of all evaluations is the current state of a house
-* Georeferenced: location is a core concept in this data with no concise representation (ie: no lat/lng).
+# A little about .five[![](images/react_logo.svg)]
 
 ---
 
-# Data quality
-
-![TBL](images/broken_accents.png)
-
----
-# Data quality
-
-.eighty[![TBL](images/house_region_clusters.png)]
-
----
-# Data quality
-
-.eighty[![TBL](images/client_city_clusters.png)]
-
----
-# Data quality
-
-.eighty[![TBL](images/client_address_clusters.png)]
-
----
-# Data quality
-
-.eighty[![TBL](images/postal_code_clusters.png)]
-
----
-class:left, middle
-
-# Data Storage
----
-
-class:left, middle
-
-## Normalized vs queryable
-
-.ninety[![TBL](images/versioned_data.png)]
-
----
-class:left, top
-
-## Geospatial support
-
-.ninety[![TBL](images/geospatial_columns.png)]
+<iframe width="100%" height="100%" src="https://facebook.github.io/jsx/" frameborder="0" allowfullscreen></iframe>
 
 ---
 
-class: left, top
+<iframe width="100%" height="100%" src="https://babeljs.io/repl/#?babili=false&browsers=&build=&builtIns=false&code_lz=DwBwfAwgIgygBIE3IDkBnOAlApgQwMYBdgB6cIA&debug=false&circleciRepo=&evaluate=false&lineWrap=true&presets=react&targets=&version=6.26.0" frameborder="0" style="" allowfullscreen></iframe>
 
-## SQL Helper libraries need a different table structure
+---
+class: code, top, left
 
-.fourty[![TBL](images/join_monster.png)]
 ```javascript
-{                             SELECT                               {
-  user(id: 1) {               "user"."id",                         user: {
-    idEncoded                 "user"."first_name",                   idEncoded: 'MQ==',
-    fullName        ==>       "user"."last_name",        ==>         fullName: 'andrew carlson',
-    email                     "user"."email_address"                 email: 'andrew@stem.is'
-  }                           FROM "accounts" AS "user"              }
-}                             WHERE "user"."id" = 1                }
+> var state = "CDS ❤'s React"
+undefined
+> var F = (variable) => renderToString(React.createElement("p", null, variable))
+undefined
+> ui = F(state)
+'<p data-reactroot="">CDS ❤\'s React</p>'
 ```
 
-???
-Mapping between tables and types
-Open source libraries prefer open source tools
+---
+class: middle, left
+
+## DOM diffing
+```sh
+$ diff -u b.html a.html 
+--- b.html      2017-11-14 14:48:22.472886625 -0500
++++ a.html      2017-11-14 14:48:33.616466427 -0500
+@@ -1 +1 @@
+-<p data-reactroot=""></p>
++<p data-reactroot="">CDS ❤\'s React</p>
+```
 
 ---
+
+class: middle, left
+
+# Why CDS is interested in .five[![](images/react_logo.svg)]
+
+---
+
+class: middle, left
+
+# CDS isn't building websites .subtitle[we're building web applications]
+
+.center.fourty[![](./images/frontend_dev.png)]
+
+---
+class: top, center
+
+### It turns out our separation of concerns was just a separation of technologies.
+
+.sixty[![separation](images/separation_of_concerns.png)]
+
+---
+
+
+class: center, middle
+
+## Components
+
+.quote[
+  Component-based software engineering (CBSE) is
+  an approach to software development that relies on software
+  reuse. It emerged from the failure of object-oriented
+  development to support effective reuse.
+]
+
+.citation[Kaur, Arvinder, and Kulvinder Singh Mann. "Component based software engineering." International Journal of Computer Applications 2.1 (2010): 105-108.]
+---
+
+class: center, middle
+
+## Components
+
+.quote[
+  The main advantages of the Component-Based Development (CBD) approach include effective management of complexity, increased productivity, a greater degree of consistency, and a wider range of usability and extendibility, reduced time to market.
+]
+
+.citation[Kaur, Arvinder, and Kulvinder Singh Mann. "Component based software engineering." International Journal of Computer Applications 2.1 (2010): 105-108.]
+
+---
+class: center, middle
+
+## Composition
+
+![](images/cowsay.png)
+
+---
+class: left, middle
+
+# React: .subtitle[building applications via component composition]
+
+
+---
+class: code, left
+
+# Convert components to UI wherever .subtitle[tests, server, client]
+
+
+```javascript
+// render the UI on the server!
+const { html, ids, css } = extractCritical(ReactDOM.renderToString(app))
+
+// render the UI in my tests!
+  it('has a default background color', () => {
+    let button = shallow(<Button>submit</Button>).dive()
+    expect(stringify(sheet)).toMatch(/background-color:#eaebed/)
+  })
+```
+---
+class: center, middle
+
+.eighty[![](images/complicated.png)]
+
+---
+class: center, middle
+
+.eighty[![](images/challenges.png)]
+
+---
+class: center, middle
+
+.eighty[![](images/complicated_query_lang.png)]
+
+---
+class: center, middle
+
+.eighty[![](images/complicated_query_lang2.png)]
+
+---
+class: center, middle
+
+.eighty[![](images/complicated_query_lang_plus_benefits.png)]
+
+---
+class: center, middle
+
+.eighty[![](images/complicated_query_lang_plus_benefits_graphql.png)]
+
+---
+
+class: center, middle
+
+## What's exciting is not addition, it's the possibility of subtraction
+
+---
+
+class: center, middle
+
+.eighty[![together](images/after_graphql_and_arango.png)]
+
+---
+class: center, middle
+
+.eighty[![](images/after_graphql_and_arango_and_js.png)]
+
+---
+class: center, middle
+
+# Speed requires depth of knowledge
+# Security is a subtractive process
+
+.eighty[![](images/after_graphql_and_arango_and_js.png)]
+
+---
+
+class: center, middle
+
+# GraphQL
+
+### A schema that lives outside your database
+
+---
+
+class: center, middle
+
+.onehundred[![request](images/graphql_request_response.png)]
+
+---
+
+class: center, middle
+
+```javascript
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'Query',
+    fields: () => ({
+      hello: {
+        type: GraphQLString,
+        resolve: () => {
+          return 'world'
+        }
+      }
+    })
+  })
+})
+
+let query = ` { hello } `
+```
+
+---
+
+class: center, middle
+
+```javascript
+import { graphql } from 'graphql'
+
+// two inputs
+graphql(schema, query)
+
+// one output
+{ data: { hello: 'world' } }
+```
+
+---
+
+class: center, middle
+
+# Adjusting our schema to take arguments
+
+```javascript
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'Query',
+    fields: () => ({
+      hello: {
+        type: GraphQLString,
+        resolve: () => {
+          return 'world'
+        }
+      }
+    })
+  })
+})
+```
+
+---
+class: center, middle
+
+# Adjusting our schema to take arguments
+
+```javascript
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'Query',
+    fields: () => ({
+      hello: {
+        type: GraphQLString,
+        resolve: (root) => {
+          return 'world'
+        }
+      }
+    })
+  })
+})
+```
+
+---
+class: center, middle
+
+# Adjusting our schema to take arguments
+
+```javascript
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'Query',
+    fields: () => ({
+      hello: {
+        type: GraphQLString,
+        resolve: (root, args) => {
+          return 'world'
+        }
+      }
+    })
+  })
+})
+```
+
+---
+class: center, middle
+
+# Adjusting our schema to take arguments
+
+```javascript
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'Query',
+    fields: () => ({
+      hello: {
+        args: { },
+        type: GraphQLString,
+        resolve: (root, args) => {
+          return 'world'
+        }
+      }
+    })
+  })
+})
+```
+
+---
+class: center, middle
+
+# Adjusting our schema to take arguments
+
+```javascript
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'Query',
+    fields: () => ({
+      hello: {
+        args: {
+          adjective: {}
+        },
+        type: GraphQLString,
+        resolve: (root, args) => {
+          return 'world'
+        }
+      }
+    })
+  })
+})
+```
+
+---
+class: center, middle
+
+# Adjusting our schema to take arguments
+
+```javascript
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'Query',
+    fields: () => ({
+      hello: {
+        args: {
+          adjective: { type: GraphQLString }
+        },
+        type: GraphQLString,
+        resolve: (root, args) => {
+          return 'world'
+        }
+      }
+    })
+  })
+})
+```
+
+---
+class: center, middle
+
+# Adjusting our schema to take arguments
+
+```javascript
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'Query',
+    fields: () => ({
+      hello: {
+        args: {
+          adjective: { type: GraphQLString }
+        },
+        type: GraphQLString,
+        resolve: (root, args) => {
+          return args.adjective + ' world'
+        }
+      }
+    })
+  })
+})
+```
+
+---
+
+class: center, middle
+
+```javascript
+graphql(schema, ` { hello(adjective: "beautiful") }`)
+
+// the output
+{ data: { hello: 'beautiful world' } }
+```
+
+---
+
+class: center, middle
+
+# It's not about databases
+### GraphQL's responsibility ends at the resolve function
+
+```javascript
+resolve: (root, args) => {
+  //???
+}
+```
+
+---
+
+class: center, middle
+
+# Talking to ArangoDB
+
+---
+class: center, middle
+
+.onehundred[![knows graph](images/example_graphs.png)]
+
+---
+class: center, middle
+
+.onehundred[![knows graph](images/knows_graph.png)]
+
+---
+
+class: center, middle
+
+```javascript
+async function getPersonByName (name) {
+  let query = aql`
+      FOR person IN persons
+        FILTER person.name == ${ name }
+          LIMIT 1
+          RETURN person
+    `
+  let results = await db.query(query)
+  return results.next()
+}
+```
+---
+class: center, middle
+
+
+```javascript
+let Person = new GraphQLObjectType({
+  name: 'Person',
+  fields: () => ({
+    name: {
+      type: GraphQLString
+    }
+  })
+})
+```
+---
+class: center, middle
+
+
+```javascript
+let schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'Query',
+    fields: () => ({
+      person: {
+        args: {
+          name: {
+            type: new GraphQLNonNull(GraphQLString)
+          }
+        },
+        type: Person,
+        resolve: (root, args) => {
+          return getPersonByName(args.name)
+        },
+      }
+    })
+  })
+})
+```
+---
+
+class: center, middle
+
+```javascript
+let query = `
+  {
+    person(name: "Eve") {
+      name
+    }
+  }
+`
+graphql(schema, query)
+
+// the output
+{ data: { name: 'Eve' } }
+```
+
+---
+
+class: center, middle
+
+# Getting the rest of the graph
+
+```javascript
+async function getFriends (id) {
+  let query = aql`
+      FOR vertex IN OUTBOUND ${id} knows
+        RETURN vertex
+    `
+  let results = await db.query(query)
+  return await results.all()
+}
+```
+
+---
+class: center, middle
+
+# Getting the rest of the graph
+
+```javascript
+let Person = new GraphQLObjectType({
+  name: 'Person',
+  fields: () => ({
+    name: {
+      type: GraphQLString
+    }
+  })
+})
+```
+
+---
+class: center, middle
+
+# Getting the rest of the graph
+
+```javascript
+//{_key: 'eve', _id: 'persons/eve', _rev: '_Uoh3SVi--_', name: 'Eve'}
+
+let Person = new GraphQLObjectType({
+  name: 'Person',
+  fields: () => ({
+    name: {
+      type: GraphQLString
+    },
+    friends: {
+      type: new GraphQLList(Person),
+      resolve(root) {
+        return getFriends(root._id)
+      }
+    }
+  })
+})
+```
+
+---
+class: center, middle
+
+```javascript
+let query = `
+  {
+    person(name: "Eve") {
+      name
+      friends {
+        name
+      }
+    }
+  }
+`
+graphql(schema, query)
+```
+
+---
+class: center, middle
+
+```javascript
+{
+  "data": {
+    "person": {
+      "name": "Eve",
+      "friends": [
+        {
+          "name": "Bob"
+        },
+        {
+          "name": "Alice"
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+class: center, middle
+
+```javascript
+let query = `
+  {
+    person(name: "Eve") {
+      name
+      friends {
+        name
+        friends {
+          name
+        }
+      }
+    }
+  }
+`
+graphql(schema, query)
+```
+
+---
+
+class: center, middle
+
+.output[```javascript
+{
+  "data": {
+    "person": {
+      "name": "Eve",
+      "friends": [
+        {
+          "name": "Bob",
+          "friends": [
+            {
+              "name": "Charlie"
+            },
+            {
+              "name": "Dave"
+            }
+          ]
+        },
+        {
+          "name": "Alice",
+          "friends": [
+            {
+              "name": "Bob"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```]
+
+---
+
+class: center, middle
+
+# Performance with Dataloader
+
+---
+
+class: center, middle
+```javascript
+{"query":"FOR person IN persons
+  FILTER person.name == @value0
+  LIMIT 1 RETURN person","bindVars":{"value0":"Eve"}}
+
+{"query":"FOR vertex IN OUTBOUND @value0 knows
+  RETURN vertex","bindVars":{"value0":"persons/eve"}}
+
+{"query":"FOR vertex IN OUTBOUND @value0 knows
+  RETURN vertex","bindVars":{"value0":"persons/bob"}}
+
+{"query":"FOR vertex IN OUTBOUND @value0 knows
+  RETURN vertex","bindVars":{"value0":"persons/alice"}}
+
+```
+
+---
+
+class: center, middle
+.quote[A batch loading function accepts an Array of keys, and returns a Promise which resolves to an Array of values.]
+
+```javascript
+async function getFriendsByIDs (ids) {
+  let query = aql`
+    FOR id IN ${ ids }
+      let friends = (
+        FOR vertex IN OUTBOUND id knows
+          RETURN vertex
+      )
+      RETURN friends
+  `
+  let response = await db.query(query)
+  return response.all()
+}
+```
+
+---
+
+class: center, middle
+
+```javascript
+const FriendsLoader = new DataLoader(getFriendsByIDs)
+graphql(schema, query, {}, { FriendsLoader })
+
+// Arguments to the graphql function
+graphql(
+  schema: GraphQLSchema,
+  requestString: string,
+  rootValue?: ?any,
+  contextValue?: ?any, // <----
+  variableValues?: ?{[key: string]: any},
+  operationName?: ?string
+): Promise<GraphQLResult>
+```
+---
+
+class: center, middle
+```javascript
+let Person = new GraphQLObjectType({
+  name: 'Person',
+  fields: () => ({
+    name: {
+      type: GraphQLString
+    },
+    friends: {
+      type: new GraphQLList(Person),
+      resolve(root, args, context) {
+        return context.FriendsLoader.load(root._id)
+      }
+    }
+  })
+})
+```
+
+---
+class: center, middle
+
+```javascript
+let query = `
+  query {
+    person(name: "Eve") {
+      name
+      friends {
+        name
+        friends {
+          name
+        }
+      }
+    }
+  }
+`
+const FriendsLoader = new DataLoader(getFriendsByIDs)
+//      schema  query  root  context
+graphql(schema, query, {}, { FriendsLoader })
+```
+---
+class: center, middle
+
+```javascript
+{"query":"FOR person IN persons
+   FILTER person.name == @value0
+   LIMIT 1 RETURN person","bindVars":{"value0":"Eve"}}
+
+{"query":"FOR id IN @value0
+   let friends = (
+    FOR vertex IN  OUTBOUND id knows
+      RETURN vertex
+    )
+  RETURN friends","bindVars":{"value0":["persons/eve"]}}
+
+{"query":"FOR id IN @value0
+   let friends = (
+    FOR vertex IN  OUTBOUND id knows
+      RETURN vertex
+    )
+  RETURN friends","bindVars":{"value0":["persons/alice","persons/bob"]}}
+
+```
+---
+
+class: center, middle
+
+# Serving our schema with Express.js
+
+---
+
+class: center, middle
+
+```javascript
+import express from 'express'
+import graphqlHTTP from 'express-graphql'
+import schema from './schema'
+import DataLoader from 'dataloader'
+import { getFriendsByIDs } from '../src/database'
+
+const FriendsLoader = new DataLoader(getFriendsByIDs)
+
+const app = express()
+app.use('/graphql', graphqlHTTP({ schema, context: { FriendsLoader }}))
+
+app.listen(3000)
+// http://localhost:3000/graphql is up and running!
+```
+
+---
+
+class: center, middle
+
+# GraphQL
+
+## A schema outside the database!
+
+* Schema is no longer a yes/no question: Where do you want your schema?
+* Schema outside the DB applies across systems
+* Schema outside the DB catches bad input at application boundary
+* No longer a choice between schema and flexibility
+
+---
+class: center, middle
+
+# Build more things with fewer things
+
+.logo[![knows graph](images/arango_plus_graphql.png)]
+
+
 class: left, middle, smaller-text
 
 # Optimizing for the API

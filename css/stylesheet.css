@@ -360,6 +360,10 @@ b {
   margin: 0;
 }
 
+.five img {
+  width: 5%;
+}
+
 .ten img {
   width: 10%;
 }
