@@ -10,8 +10,44 @@
 
 class: middle, title-slide
 
-# How we're building
-## &amp; why we're excited about React & GraphQL
+# React & GraphQL
+## ...and the problems they solve
+
+---
+
+class: left, top
+
+# The problem: DOM performance
+
+.seventy[![](images/webkitflow.png)]
+> Image: Tali Garsiel - How browsers work internally
+
+---
+class: center, top
+
+# The problem: DOM performance
+
+.fifty[![](images/what_forces_reflow.png)]
+
+---
+
+class: center, top
+
+# Solution: Virtual DOM
+
+.fifty[![](images/virtual_dom.png)]
+> Image: Tero Parviainen - Change And Its Detection In JavaScript Frameworks
+
+---
+class: left, middle
+
+# Virtual DOM
+
+* React
+* Angular 2
+* Vue
+* Ember
+* Elm
 
 ---
 class: left, middle
@@ -129,6 +165,11 @@ const { html, ids, css } = extractCritical(ReactDOM.renderToString(app))
   })
 ```
 ---
+class: left, middle
+
+# A little about .five[![](images/graphql_logo.svg)]
+
+---
 class: center, middle
 
 .eighty[![](images/complicated.png)]
@@ -199,7 +240,7 @@ class: center, middle
 
 ---
 
-class: center, middle
+class: code, top
 
 ```javascript
 const schema = new GraphQLSchema({
@@ -221,7 +262,7 @@ let query = ` { hello } `
 
 ---
 
-class: center, middle
+class: code
 
 ```javascript
 import { graphql } from 'graphql'
@@ -235,9 +276,9 @@ graphql(schema, query)
 
 ---
 
-class: center, middle
+class: top, code
 
-# Adjusting our schema to take arguments
+### Adjusting our schema to take arguments
 
 ```javascript
 const schema = new GraphQLSchema({
@@ -256,9 +297,9 @@ const schema = new GraphQLSchema({
 ```
 
 ---
-class: center, middle
+class: top, code
 
-# Adjusting our schema to take arguments
+### Adjusting our schema to take arguments
 
 ```javascript
 const schema = new GraphQLSchema({
@@ -277,9 +318,9 @@ const schema = new GraphQLSchema({
 ```
 
 ---
-class: center, middle
+class: top, code
 
-# Adjusting our schema to take arguments
+### Adjusting our schema to take arguments
 
 ```javascript
 const schema = new GraphQLSchema({
@@ -298,9 +339,9 @@ const schema = new GraphQLSchema({
 ```
 
 ---
-class: center, middle
+class: top, code
 
-# Adjusting our schema to take arguments
+### Adjusting our schema to take arguments
 
 ```javascript
 const schema = new GraphQLSchema({
@@ -320,9 +361,9 @@ const schema = new GraphQLSchema({
 ```
 
 ---
-class: center, middle
+class: top, code
 
-# Adjusting our schema to take arguments
+### Adjusting our schema to take arguments
 
 ```javascript
 const schema = new GraphQLSchema({
@@ -344,9 +385,9 @@ const schema = new GraphQLSchema({
 ```
 
 ---
-class: center, middle
+class: top, code
 
-# Adjusting our schema to take arguments
+### Adjusting our schema to take arguments
 
 ```javascript
 const schema = new GraphQLSchema({
@@ -368,9 +409,9 @@ const schema = new GraphQLSchema({
 ```
 
 ---
-class: center, middle
+class: top, code
 
-# Adjusting our schema to take arguments
+### Adjusting our schema to take arguments
 
 ```javascript
 const schema = new GraphQLSchema({
@@ -393,10 +434,10 @@ const schema = new GraphQLSchema({
 
 ---
 
-class: center, middle
+class: code
 
 ```javascript
-graphql(schema, ` { hello(adjective: "beautiful") }`)
+graphql(schema, `{ hello(adjective: "beautiful") }`)
 
 // the output
 { data: { hello: 'beautiful world' } }
@@ -404,14 +445,16 @@ graphql(schema, ` { hello(adjective: "beautiful") }`)
 
 ---
 
-class: center, middle
+class: top, code, bigger-text
 
-# It's not about databases
+## It's not about databases
 ### GraphQL's responsibility ends at the resolve function
 
 ```javascript
 resolve: (root, args) => {
-  //???
+  // Talk to SQL Server?
+  // Talk to API?
+	// return the type you promised
 }
 ```
 
@@ -899,7 +942,7 @@ class: center
 .email[mike.williamson@tbs-sct.gc.ca]
 
     </textarea>
-    <script src="js/remark-latest.min.js"></script>
+    <script src="js/remark.min.js"></script>
     <script>
       var slideshow = remark.create({ratio: "16:9"});
     </script>

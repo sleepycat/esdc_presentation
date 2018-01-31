@@ -59,7 +59,6 @@ ul li {
   padding-right: 40px;
   padding-left: 0px;
   margin-right: 40px;
-  height: 150px;
 }
 
 .github {
@@ -313,6 +312,14 @@ b {
 
 .smaller-text .remark-code {
   font-size: 0.7em;
+}
+
+.bigger-text .remark-code {
+  font-size: 1.5em;
+}
+
+.remark-code {
+  font-size: 1.1em;
 }
 
 .remark-code,
