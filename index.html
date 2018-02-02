@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html> <html>
   <head>
     <title>NRCAN API</title>
     <meta charset="utf-8">
@@ -10,36 +9,40 @@
 
 class: middle, title-slide
 
-# React & GraphQL
-## ...and the problems they solve
+# React@CDS
+
+---
+# The DOM
+
+### The Document Object Model is a platform- and language-neutral interface that will allow programs and scripts to dynamically access and update the content, structure and style of documents.
+
+---
+
+class: left, top
+## More and more interactivity
+
+.ninetyfive[![](images/web_platform_timeline.png)]
+
+---
+class: left, top
+
+# The DOM
+
+.center.seventy[![](images/webkitflow.png)]
+
+.center[Image: Tali Garsiel - How browsers work internally]
 
 ---
 
 class: left, top
 
-# The problem: DOM performance
-
-.seventy[![](images/webkitflow.png)]
-> Image: Tali Garsiel - How browsers work internally
-
----
-class: center, top
-
-# The problem: DOM performance
-
-.fifty[![](images/what_forces_reflow.png)]
-
----
-
-class: center, top
-
 # Solution: Virtual DOM
 
-.fifty[![](images/virtual_dom.png)]
-> Image: Tero Parviainen - Change And Its Detection In JavaScript Frameworks
+.center.fifty[![](images/virtual_dom.png)]
+.center[Image: Tero Parviainen - Change And Its Detection In JavaScript Frameworks]
 
 ---
-class: left, middle
+class: left, top
 
 # Virtual DOM
 
@@ -55,38 +58,67 @@ class: left, middle
 # A little about .five[![](images/react_logo.svg)]
 
 ---
+class: left, top, code, bigger-text
+
+# This is React
+
+```javascript
+React.createElement('p')
+```
+
+---
 
 <iframe width="100%" height="100%" src="https://facebook.github.io/jsx/" frameborder="0" allowfullscreen></iframe>
 
 ---
 
-<iframe width="100%" height="100%" src="https://babeljs.io/repl/#?babili=false&browsers=&build=&builtIns=false&code_lz=DwBwfAwgIgygBIE3IDkBnOAlApgQwMYBdgB6cIA&debug=false&circleciRepo=&evaluate=false&lineWrap=true&presets=react&targets=&version=6.26.0" frameborder="0" style="" allowfullscreen></iframe>
+<iframe width="100%" height="100%" src="https://babeljs.io/repl/#?babili=false&browsers=&build=&builtIns=false&code_lz=DwEwlgbgfAUABHYAHOB7AdgYQDZgMYDWAvAN4AUAlHEVHAIbYCmATgC5kDkAYqqhxQF8omACIBlOIBNyDgGc4AJUZ08rYAHoksdeGhA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&lineWrap=true&presets=react&prettier=false&targets=&version=6.26.0&envVersion=" frameborder="0" style="" allowfullscreen></iframe>
 
 ---
-class: code, top, left
+class: left, top, code
 
 ```javascript
-> var state = "CDS ❤'s React"
-undefined
-> var F = (variable) => renderToString(React.createElement("p", null, variable))
-undefined
-> ui = F(state)
-'<p data-reactroot="">CDS ❤\'s React</p>'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Header from './Header';
+import Footer from './Footer';
+import MyAwesomeReactComponent from './MyAwesomeReactComponent';
+
+const App = () => (
+  <main>
+    <Header/>
+      <MyAwesomeReactComponent />
+    <Footer/>
+  </main>
+);
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('app')
+);
 ```
 
 ---
-class: middle, left
 
-## DOM diffing
-```sh
-$ diff -u b.html a.html 
---- b.html      2017-11-14 14:48:22.472886625 -0500
-+++ a.html      2017-11-14 14:48:33.616466427 -0500
-@@ -1 +1 @@
--<p data-reactroot=""></p>
-+<p data-reactroot="">CDS ❤\'s React</p>
+class: code, left, bigger-text
+
+# Generate HTML on the server
+
+
+```javascript
+ReactDOM.renderToString(<App/>)
 ```
+---
+class: code, left, bigger-text
 
+# Generate HTML in your tests
+
+```javascript
+  it('has a default background color', () => {
+    let button = shallow(<Button>submit</Button>).dive()
+    expect(stringify(sheet)).toMatch(/background-color:#eaebed/)
+  })
+```
 ---
 
 class: middle, left
@@ -94,38 +126,27 @@ class: middle, left
 # Why CDS is interested in .five[![](images/react_logo.svg)]
 
 ---
+class: left, middle
 
-class: middle, left
-
-# CDS isn't building websites .subtitle[we're building web applications]
-
-.center.fourty[![](./images/frontend_dev.png)]
+.center.ten[![](images/react_logo.svg)]
+## .subtitle[building applications via component composition]
 
 ---
-class: top, center
-
-### It turns out our separation of concerns was just a separation of technologies.
-
-.sixty[![separation](images/separation_of_concerns.png)]
-
----
-
-
-class: center, middle
+class: left, top
 
 ## Components
 
-.quote[
+.center.quote[
   Component-based software engineering (CBSE) is
   an approach to software development that relies on software
   reuse. It emerged from the failure of object-oriented
   development to support effective reuse.
 ]
 
-.citation[Kaur, Arvinder, and Kulvinder Singh Mann. "Component based software engineering." International Journal of Computer Applications 2.1 (2010): 105-108.]
+.center[Kaur, Arvinder, and Kulvinder Singh Mann. "Component based software engineering." International Journal of Computer Applications 2.1 (2010): 105-108.]
 ---
 
-class: center, middle
+class: left, top
 
 ## Components
 
@@ -136,809 +157,40 @@ class: center, middle
 .citation[Kaur, Arvinder, and Kulvinder Singh Mann. "Component based software engineering." International Journal of Computer Applications 2.1 (2010): 105-108.]
 
 ---
-class: center, middle
+class: left, top
 
 ## Composition
 
 ![](images/cowsay.png)
 
 ---
-class: left, middle
+class: top, left, code
 
-# React: .subtitle[building applications via component composition]
-
-
----
-class: code, left
-
-# Convert components to UI wherever .subtitle[tests, server, client]
-
+### We need to build with bricks not sand
 
 ```javascript
-// render the UI on the server!
-const { html, ids, css } = extractCritical(ReactDOM.renderToString(app))
+import { GoCSignature } from '@cdssnc/gcui'
 
-// render the UI in my tests!
-  it('has a default background color', () => {
-    let button = shallow(<Button>submit</Button>).dive()
-    expect(stringify(sheet)).toMatch(/background-color:#eaebed/)
-  })
-```
----
-class: left, middle
-
-# A little about .five[![](images/graphql_logo.svg)]
-
----
-class: center, middle
-
-.eighty[![](images/complicated.png)]
-
----
-class: center, middle
-
-.eighty[![](images/challenges.png)]
-
----
-class: center, middle
-
-.eighty[![](images/complicated_query_lang.png)]
-
----
-class: center, middle
-
-.eighty[![](images/complicated_query_lang2.png)]
-
----
-class: center, middle
-
-.eighty[![](images/complicated_query_lang_plus_benefits.png)]
-
----
-class: center, middle
-
-.eighty[![](images/complicated_query_lang_plus_benefits_graphql.png)]
-
----
-
-class: center, middle
-
-## What's exciting is not addition, it's the possibility of subtraction
-
----
-
-class: center, middle
-
-.eighty[![together](images/after_graphql_and_arango.png)]
-
----
-class: center, middle
-
-.eighty[![](images/after_graphql_and_arango_and_js.png)]
-
----
-class: center, middle
-
-# Speed requires depth of knowledge
-# Security is a subtractive process
-
-.eighty[![](images/after_graphql_and_arango_and_js.png)]
-
----
-
-class: center, middle
-
-# GraphQL
-
-### A schema that lives outside your database
-
----
-
-class: center, middle
-
-.onehundred[![request](images/graphql_request_response.png)]
-
----
-
-class: code, top
-
-```javascript
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: () => ({
-      hello: {
-        type: GraphQLString,
-        resolve: () => {
-          return 'world'
-        }
-      }
-    })
-  })
-})
-
-let query = ` { hello } `
-```
-
----
-
-class: code
-
-```javascript
-import { graphql } from 'graphql'
-
-// two inputs
-graphql(schema, query)
-
-// one output
-{ data: { hello: 'world' } }
-```
-
----
-
-class: top, code
-
-### Adjusting our schema to take arguments
-
-```javascript
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: () => ({
-      hello: {
-        type: GraphQLString,
-        resolve: () => {
-          return 'world'
-        }
-      }
-    })
-  })
-})
-```
-
----
-class: top, code
-
-### Adjusting our schema to take arguments
-
-```javascript
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: () => ({
-      hello: {
-        type: GraphQLString,
-        resolve: (root) => {
-          return 'world'
-        }
-      }
-    })
-  })
-})
-```
-
----
-class: top, code
-
-### Adjusting our schema to take arguments
-
-```javascript
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: () => ({
-      hello: {
-        type: GraphQLString,
-        resolve: (root, args) => {
-          return 'world'
-        }
-      }
-    })
-  })
-})
-```
-
----
-class: top, code
-
-### Adjusting our schema to take arguments
-
-```javascript
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: () => ({
-      hello: {
-        args: { },
-        type: GraphQLString,
-        resolve: (root, args) => {
-          return 'world'
-        }
-      }
-    })
-  })
-})
-```
-
----
-class: top, code
-
-### Adjusting our schema to take arguments
-
-```javascript
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: () => ({
-      hello: {
-        args: {
-          adjective: {}
-        },
-        type: GraphQLString,
-        resolve: (root, args) => {
-          return 'world'
-        }
-      }
-    })
-  })
-})
-```
-
----
-class: top, code
-
-### Adjusting our schema to take arguments
-
-```javascript
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: () => ({
-      hello: {
-        args: {
-          adjective: { type: GraphQLString }
-        },
-        type: GraphQLString,
-        resolve: (root, args) => {
-          return 'world'
-        }
-      }
-    })
-  })
-})
-```
-
----
-class: top, code
-
-### Adjusting our schema to take arguments
-
-```javascript
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: () => ({
-      hello: {
-        args: {
-          adjective: { type: GraphQLString }
-        },
-        type: GraphQLString,
-        resolve: (root, args) => {
-          return args.adjective + ' world'
-        }
-      }
-    })
-  })
-})
-```
-
----
-
-class: code
-
-```javascript
-graphql(schema, `{ hello(adjective: "beautiful") }`)
-
-// the output
-{ data: { hello: 'beautiful world' } }
-```
-
----
-
-class: top, code, bigger-text
-
-## It's not about databases
-### GraphQL's responsibility ends at the resolve function
-
-```javascript
-resolve: (root, args) => {
-  // Talk to SQL Server?
-  // Talk to API?
-	// return the type you promised
-}
-```
-
----
-
-class: center, middle
-
-# Talking to ArangoDB
-
----
-class: center, middle
-
-.onehundred[![knows graph](images/example_graphs.png)]
-
----
-class: center, middle
-
-.onehundred[![knows graph](images/knows_graph.png)]
-
----
-
-class: center, middle
-
-```javascript
-async function getPersonByName (name) {
-  let query = aql`
-      FOR person IN persons
-        FILTER person.name == ${ name }
-          LIMIT 1
-          RETURN person
-    `
-  let results = await db.query(query)
-  return results.next()
-}
-```
----
-class: center, middle
-
-
-```javascript
-let Person = new GraphQLObjectType({
-  name: 'Person',
-  fields: () => ({
-    name: {
-      type: GraphQLString
-    }
-  })
-})
-```
----
-class: center, middle
-
-
-```javascript
-let schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: () => ({
-      person: {
-        args: {
-          name: {
-            type: new GraphQLNonNull(GraphQLString)
-          }
-        },
-        type: Person,
-        resolve: (root, args) => {
-          return getPersonByName(args.name)
-        },
-      }
-    })
-  })
-})
+<GoCSignature width="26em" />
 ```
 ---
 
-class: center, middle
+class: top, left
 
-```javascript
-let query = `
-  {
-    person(name: "Eve") {
-      name
-    }
-  }
-`
-graphql(schema, query)
+### We need to benefit from each others work
 
-// the output
-{ data: { name: 'Eve' } }
-```
-
----
-
-class: center, middle
-
-# Getting the rest of the graph
-
-```javascript
-async function getFriends (id) {
-  let query = aql`
-      FOR vertex IN OUTBOUND ${id} knows
-        RETURN vertex
-    `
-  let results = await db.query(query)
-  return await results.all()
-}
-```
-
----
-class: center, middle
-
-# Getting the rest of the graph
-
-```javascript
-let Person = new GraphQLObjectType({
-  name: 'Person',
-  fields: () => ({
-    name: {
-      type: GraphQLString
-    }
-  })
-})
-```
-
----
-class: center, middle
-
-# Getting the rest of the graph
-
-```javascript
-//{_key: 'eve', _id: 'persons/eve', _rev: '_Uoh3SVi--_', name: 'Eve'}
-
-let Person = new GraphQLObjectType({
-  name: 'Person',
-  fields: () => ({
-    name: {
-      type: GraphQLString
-    },
-    friends: {
-      type: new GraphQLList(Person),
-      resolve(root) {
-        return getFriends(root._id)
-      }
-    }
-  })
-})
-```
-
----
-class: center, middle
-
-```javascript
-let query = `
-  {
-    person(name: "Eve") {
-      name
-      friends {
-        name
-      }
-    }
-  }
-`
-graphql(schema, query)
-```
-
----
-class: center, middle
-
-```javascript
-{
-  "data": {
-    "person": {
-      "name": "Eve",
-      "friends": [
-        {
-          "name": "Bob"
-        },
-        {
-          "name": "Alice"
-        }
-      ]
-    }
-  }
-}
-```
-
----
-
-class: center, middle
-
-```javascript
-let query = `
-  {
-    person(name: "Eve") {
-      name
-      friends {
-        name
-        friends {
-          name
-        }
-      }
-    }
-  }
-`
-graphql(schema, query)
-```
-
----
-
-class: center, middle
-
-.output[```javascript
-{
-  "data": {
-    "person": {
-      "name": "Eve",
-      "friends": [
-        {
-          "name": "Bob",
-          "friends": [
-            {
-              "name": "Charlie"
-            },
-            {
-              "name": "Dave"
-            }
-          ]
-        },
-        {
-          "name": "Alice",
-          "friends": [
-            {
-              "name": "Bob"
-            }
-          ]
-        }
-      ]
-    }
-  }
-}
-```]
-
----
-
-class: center, middle
-
-# Performance with Dataloader
-
----
-
-class: center, middle
-```javascript
-{"query":"FOR person IN persons
-  FILTER person.name == @value0
-  LIMIT 1 RETURN person","bindVars":{"value0":"Eve"}}
-
-{"query":"FOR vertex IN OUTBOUND @value0 knows
-  RETURN vertex","bindVars":{"value0":"persons/eve"}}
-
-{"query":"FOR vertex IN OUTBOUND @value0 knows
-  RETURN vertex","bindVars":{"value0":"persons/bob"}}
-
-{"query":"FOR vertex IN OUTBOUND @value0 knows
-  RETURN vertex","bindVars":{"value0":"persons/alice"}}
-
-```
-
----
-
-class: center, middle
-.quote[A batch loading function accepts an Array of keys, and returns a Promise which resolves to an Array of values.]
-
-```javascript
-async function getFriendsByIDs (ids) {
-  let query = aql`
-    FOR id IN ${ ids }
-      let friends = (
-        FOR vertex IN OUTBOUND id knows
-          RETURN vertex
-      )
-      RETURN friends
-  `
-  let response = await db.query(query)
-  return response.all()
-}
-```
-
----
-
-class: center, middle
-
-```javascript
-const FriendsLoader = new DataLoader(getFriendsByIDs)
-graphql(schema, query, {}, { FriendsLoader })
-
-// Arguments to the graphql function
-graphql(
-  schema: GraphQLSchema,
-  requestString: string,
-  rootValue?: ?any,
-  contextValue?: ?any, // <----
-  variableValues?: ?{[key: string]: any},
-  operationName?: ?string
-): Promise<GraphQLResult>
-```
----
-
-class: center, middle
-```javascript
-let Person = new GraphQLObjectType({
-  name: 'Person',
-  fields: () => ({
-    name: {
-      type: GraphQLString
-    },
-    friends: {
-      type: new GraphQLList(Person),
-      resolve(root, args, context) {
-        return context.FriendsLoader.load(root._id)
-      }
-    }
-  })
-})
-```
-
----
-class: center, middle
-
-```javascript
-let query = `
-  query {
-    person(name: "Eve") {
-      name
-      friends {
-        name
-        friends {
-          name
-        }
-      }
-    }
-  }
-`
-const FriendsLoader = new DataLoader(getFriendsByIDs)
-//      schema  query  root  context
-graphql(schema, query, {}, { FriendsLoader })
-```
----
-class: center, middle
-
-```javascript
-{"query":"FOR person IN persons
-   FILTER person.name == @value0
-   LIMIT 1 RETURN person","bindVars":{"value0":"Eve"}}
-
-{"query":"FOR id IN @value0
-   let friends = (
-    FOR vertex IN  OUTBOUND id knows
-      RETURN vertex
-    )
-  RETURN friends","bindVars":{"value0":["persons/eve"]}}
-
-{"query":"FOR id IN @value0
-   let friends = (
-    FOR vertex IN  OUTBOUND id knows
-      RETURN vertex
-    )
-  RETURN friends","bindVars":{"value0":["persons/alice","persons/bob"]}}
-
-```
----
-
-class: center, middle
-
-# Serving our schema with Express.js
-
----
-
-class: center, middle
-
-```javascript
-import express from 'express'
-import graphqlHTTP from 'express-graphql'
-import schema from './schema'
-import DataLoader from 'dataloader'
-import { getFriendsByIDs } from '../src/database'
-
-const FriendsLoader = new DataLoader(getFriendsByIDs)
-
-const app = express()
-app.use('/graphql', graphqlHTTP({ schema, context: { FriendsLoader }}))
-
-app.listen(3000)
-// http://localhost:3000/graphql is up and running!
-```
-
----
-
-class: center, middle
-
-# GraphQL
-
-## A schema outside the database!
-
-* Schema is no longer a yes/no question: Where do you want your schema?
-* Schema outside the DB applies across systems
-* Schema outside the DB catches bad input at application boundary
-* No longer a choice between schema and flexibility
-
----
-class: center, middle
-
-# Build more things with fewer things
-
-.logo[![knows graph](images/arango_plus_graphql.png)]
-
-
-class: left, middle, smaller-text
-
-# Optimizing for the API
-"When faced with two or more alternatives that deliver roughly the same value,</br>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;take the path that makes future change easier." -- Dave Thomas
-
----
-
-class: left, middle, smaller-text
-
-# Optimizing for:
-
-* Queryability: run queries against a single pool of data
-* Efficient Storage: No need to store null values
-* Development speed:
-  * Open Source == no procurement process/licence management
-  * Easy install
-  * Schemaless == effortless setup
-  * Ubiquitous: supports test driven development
-* Change: We can modify things as needed, ie: adding geospatial fields
-
----
-
-class: left, middle
-
-# A proposal: API backed by MongoDB
-
----
-
-class: left, middle, smaller-text
-
-# Why a Separate database?
-
-* Performance issues won't effect other systems
-* Optimize database structure for queries
-* Clean up data for querying and public consumption
-
----
-
-class: left, middle, smaller-text
-
-# Why MongoDB?
-
-* Document store: perfect for semi-structured data
-* Performant
-* Dev speed++
-* Scalable
-* OSS
-* Excellent geopatial support
-* Cross platform: Windows, Mac, Linux
-* Multiple options: fully hosted (many providers) or DIY
-* Azure's CosmosDB fully supports MongoDB features/syntax.
-
----
-
-# Loose ends
-
-## Updating:
-  * Should the mailer bot insert into the API?
-  * Should there be some "post insert" job?
+.center.twentyfive[![](images/build_components.jpg)]
 
 ---
 
 class: center
 
+## See you on Github!
+
 .contactImages[![Contact Images](images/contact.png)]
 
 .github[@sleepycat]
-.twitter[@dexterchief] 
+.twitter[@dexterchief]
 .email[mike.williamson@tbs-sct.gc.ca]
 
     </textarea>
