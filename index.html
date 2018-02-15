@@ -1,6 +1,6 @@
 <!DOCTYPE html> <html>
   <head>
-    <title>NRCAN API</title>
+    <title>ESDC</title>
     <meta charset="utf-8">
     <link rel= "stylesheet" href= "css/stylesheet.css" />
   </head>
@@ -12,9 +12,24 @@ class: middle, title-slide
 # React@CDS
 
 ---
+
+## CDS
+>The Government of Canada has an opportunity—and a responsibility—to deliver world-class services to Canadians. <strong>This will require disruption as we make the switch, both technically and culturally, to agile digital delivery models.</strong>
+><strong>To accelerate these efforts, I am excited to announce the launch of the Canadian Digital Service (CDS)</strong> to modernize the way the Government of Canada designs and delivers digital services. CDS will be a partner to departments in delivering measurably improved services.
+><strong>We are rethinking the service design and delivery process from the user’s perspective</strong>, and engaging users every step of the way.
+> <cite>the Honourable Scott Brison</cite>
+
+---
+
+class: left, middle
+
+# The problem that .five[![](images/react_logo.svg)] solves
+
+---
+
 # The DOM
 
-### The Document Object Model is a platform- and language-neutral interface that will allow programs and scripts to dynamically access and update the content, structure and style of documents.
+> The Document Object Model is a platform- and language-neutral interface that will allow programs and scripts to dynamically access and update the content, structure and style of documents.
 
 ---
 
@@ -65,14 +80,39 @@ class: left, top, code, bigger-text
 ```javascript
 React.createElement('p')
 ```
+---
+
+class: center, middle
+
+.seventyfive[![](images/jsx_spec.png)]
+---
+
+class: center, middle
+
+.ninetyfive[![](images/transpile.png)]
+
+---
+class: left, middle
+
+## What building this way actually looks like
 
 ---
 
-<iframe width="100%" height="100%" src="https://facebook.github.io/jsx/" frameborder="0" allowfullscreen></iframe>
+class: left, top, code
 
----
+## React: markup in programming language
+```javascript
+function Greeting(props) {
+  if (props.author) {
+    const { firstName, lastName } = props.author
+    return <div><h1>{firstName} {lastName}</h1></div>
+  } else {
+  return <div><h1>Unknown Author</h1></div>
+  }
+}
+module.exports.Greeting = Greeting
+```
 
-<iframe width="100%" height="100%" src="https://babeljs.io/repl/#?babili=false&browsers=&build=&builtIns=false&code_lz=DwEwlgbgfAUABHYAHOB7AdgYQDZgMYDWAvAN4AUAlHEVHAIbYCmATgC5kDkAYqqhxQF8omACIBlOIBNyDgGc4AJUZ08rYAHoksdeGhA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&lineWrap=true&presets=react&prettier=false&targets=&version=6.26.0&envVersion=" frameborder="0" style="" allowfullscreen></iframe>
 
 ---
 class: left, top, code
@@ -82,12 +122,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Header from './Header';
 import Footer from './Footer';
-import MyAwesomeReactComponent from './MyAwesomeReactComponent';
+import Greeting from './Greeting';
+
+let me = {firstName: "Mike", lastName: "Williamson"}
 
 const App = () => (
   <main>
     <Header/>
-      <MyAwesomeReactComponent />
+      <Greeting author={me} />
     <Footer/>
   </main>
 );
@@ -136,25 +178,19 @@ class: left, top
 
 ## Components
 
-.center.quote[
-  Component-based software engineering (CBSE) is
-  an approach to software development that relies on software
-  reuse. It emerged from the failure of object-oriented
-  development to support effective reuse.
-]
-
-.center[Kaur, Arvinder, and Kulvinder Singh Mann. "Component based software engineering." International Journal of Computer Applications 2.1 (2010): 105-108.]
+> Component-based software engineering (CBSE) is
+> an approach to software development that relies on software
+> reuse. It emerged from the failure of object-oriented
+> development to support effective reuse.
+> <cite>Kaur, Arvinder, and Kulvinder Singh Mann. "Component based software engineering." International Journal of Computer Applications 2.1 (2010): 105-108.</cite>
 ---
 
 class: left, top
 
 ## Components
 
-.quote[
-  The main advantages of the Component-Based Development (CBD) approach include effective management of complexity, increased productivity, a greater degree of consistency, and a wider range of usability and extendibility, reduced time to market.
-]
-
-.citation[Kaur, Arvinder, and Kulvinder Singh Mann. "Component based software engineering." International Journal of Computer Applications 2.1 (2010): 105-108.]
+>The main advantages of the Component-Based Development (CBD) approach include effective management of complexity, increased productivity, a greater degree of consistency, and a wider range of usability and extendibility, reduced time to market.
+> <cite>Kaur, Arvinder, and Kulvinder Singh Mann. "Component based software engineering." International Journal of Computer Applications 2.1 (2010): 105-108.</cite>
 
 ---
 class: left, top
@@ -166,18 +202,43 @@ class: left, top
 ---
 class: top, left, code
 
-### We need to build with bricks not sand
+### Components let us build with bricks not sand
+
 
 ```javascript
+import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
+import Greeting from './Greeting';
 import { GoCSignature } from '@cdssnc/gcui'
 
-<GoCSignature width="26em" />
+let me = {firstName: "Mike", lastName: "Williamson"}
+
+const App = () => (
+  <main>
+    <Header/>
+      <GoCSignature width="26em" />
+      <Greeting author={me} />
+    <Footer/>
+  </main>
+);
+
 ```
+---
+class: top, left
+
+### Clear boundaries == speed
+
+* Clean updates
+* Clean removal
+* Don't need to learn the whole codebase
+
 ---
 
 class: top, left
 
-### We need to benefit from each others work
+### Delivering on Reuse: benefiting from each others work
+### Work on future projects will benefit past projects
 
 .center.twentyfive[![](images/build_components.jpg)]
 

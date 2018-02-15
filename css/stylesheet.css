@@ -24,18 +24,18 @@ ul ul li {
   border-left: none;
 }
 
-.quote {
-  margin-left: 1.85em;
+blockquote p {
   background: #f9f9f9;
   border-left: 10px solid #ccc;
-  width: 80%;
-  margin: 1.5em 10px;
+  width: 81%;
+  margin-left: auto;
+  margin-right: auto;
   line-height: 2.5em;
   padding: 0.5em 10px;
-  quotes: "\201C""\201D""\2018""\2019";
+  quotes: "🙶" "🙷";
 }
 
-.quote:before {
+blockquote p:before {
   color: #ccc;
   content: open-quote;
   font-size: 4em;
@@ -44,6 +44,13 @@ ul ul li {
   vertical-align: -0.4em;
 }
 
+blockquote cite {
+  display: block
+}
+
+blockquote cite:before {
+  content: "--- "
+}
 
 .footnote {
   font-size: 0.7em;
@@ -433,6 +440,10 @@ b {
 
 .seventy img {
   width: 70%;
+}
+
+.seventyfive img {
+  width: 75%;
 }
 
 .eighty img {
